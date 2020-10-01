@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            app:srcCompat="@drawable/add_circle"
+            android:id="@+id/button_add_lap_count"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="12dp"
+            app:layout_constraintTop_toTopOf="@+id/lap_count" app:layout_constraintBottom_toBottomOf="@+id/lap_count"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/minus"
+            android:id="@+id/button_minus_lap_count"
+            app:layout_constraintTop_toTopOf="@+id/button_add_lap_count"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add_lap_count"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_lap_count" android:layout_marginEnd="5dp"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            app:srcCompat="@drawable/add_circle"
+            android:id="@+id/button_add_first_lap_delay"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" app:layout_constraintTop_toTopOf="@+id/delay_before_first_lap"
+            app:layout_constraintBottom_toBottomOf="@+id/delay_before_first_lap"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/minus"
+            android:id="@+id/button_minus_first_lap_delay"
+            app:layout_constraintTop_toTopOf="@+id/button_add_first_lap_delay"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_first_lap_delay"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add_first_lap_delay" android:layout_marginEnd="5dp"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            app:srcCompat="@drawable/add_circle"
+            android:id="@+id/button_add_rest_duration"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="@+id/rest_duration"
+            app:layout_constraintBottom_toBottomOf="@+id/rest_duration" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="15dp"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/minus"
+            android:id="@+id/button_minus_rest_duration"
+            app:layout_constraintTop_toTopOf="@+id/button_add_rest_duration"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add_rest_duration"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_rest_duration" android:layout_marginEnd="5dp"/>
+    <TextView
+            android:text="02:30"
+            android:textSize="@dimen/time_size"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/round_duration"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.004"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="?android:actionBarSize"/>
+    <TextView
+            android:text="@string/one_round_duration"
+            android:textSize="@dimen/text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/round_duration_text"
+            app:layout_constraintStart_toStartOf="@+id/round_duration"
+            app:layout_constraintTop_toBottomOf="@+id/round_duration"/>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divider_size"
+            android:background="#7b7b7b"
+            app:layout_constraintStart_toStartOf="@+id/round_duration_text"
+            app:layout_constraintTop_toBottomOf="@+id/round_duration_text" android:id="@+id/view"
+            android:layout_marginTop="5dp" app:layout_constraintEnd_toEndOf="@+id/button_add_lap_duration"/>
+
+    <TextView
+            android:text="01:30"
+            android:textSize="@dimen/time_size"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rest_duration"
+            app:layout_constraintStart_toStartOf="@+id/round_duration_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintTop_toBottomOf="@+id/view" app:layout_constraintVertical_bias="0.0"
+    />
+    <TextView
+            android:text="@string/rest_duration"
+            android:textSize="@dimen/text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/rest_duration_text"
+            app:layout_constraintStart_toStartOf="@+id/rest_duration"
+            app:layout_constraintTop_toBottomOf="@+id/rest_duration"
+    />
+    <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divider_size"
+            android:background="#7b7b7b"
+            app:layout_constraintTop_toBottomOf="@+id/rest_duration_text"
+            app:layout_constraintStart_toStartOf="@+id/rest_duration_text" android:layout_marginTop="5dp"
+            android:id="@+id/view2" app:layout_constraintEnd_toEndOf="@+id/button_add_rest_duration"/>
+    <TextView
+            android:text="00:15"
+            android:textSize="@dimen/time_size"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/delay_before_first_lap"
+            app:layout_constraintStart_toStartOf="@+id/view2"
+            app:layout_constraintTop_toBottomOf="@+id/view2"/>
+    <TextView
+            android:text="@string/delay_before_first_lap"
+            android:textSize="@dimen/text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/delay_before_first_lap_text"
+            app:layout_constraintStart_toStartOf="@+id/delay_before_first_lap"
+            app:layout_constraintTop_toBottomOf="@+id/delay_before_first_lap"/>
+    <View
+            android:layout_width="0dp"
+            android:layout_height="@dimen/divider_size"
+            android:background="#7b7b7b"
+            app:layout_constraintTop_toBottomOf="@+id/delay_before_first_lap_text"
+            app:layout_constraintStart_toStartOf="@+id/delay_before_first_lap_text" android:layout_marginTop="5dp"
+            android:id="@+id/view3" app:layout_constraintEnd_toEndOf="@+id/button_add_first_lap_delay"/>
+    <TextView
+            android:text="7"
+            android:textSize="@dimen/time_size"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/lap_count"
+            app:layout_constraintTop_toBottomOf="@+id/view3" app:layout_constraintStart_toStartOf="@+id/view3"
+            app:layout_constraintEnd_toEndOf="@+id/delay_before_first_lap"/>
+    <TextView
+            android:text="@string/lap_count"
+            android:textSize="@dimen/text_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/lap_count_text"
+            app:layout_constraintStart_toStartOf="@+id/view3"
+            app:layout_constraintTop_toBottomOf="@+id/lap_count"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            app:srcCompat="@drawable/add_circle"
+            android:id="@+id/button_add_lap_duration"
+            android:background="@android:color/transparent"
+            app:layout_constraintTop_toTopOf="@+id/round_duration"
+            app:layout_constraintBottom_toBottomOf="@+id/round_duration"
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="15dp"/>
+    <ImageButton
+            android:layout_width="@dimen/button_size"
+            android:layout_height="@dimen/button_size"
+            android:background="@android:color/transparent"
+            app:srcCompat="@drawable/minus"
+            android:id="@+id/button_minus_lap_duration"
+            app:layout_constraintEnd_toStartOf="@+id/button_add_lap_duration" app:layout_constraintTop_toTopOf="@+id/button_add_lap_duration"
+            app:layout_constraintBottom_toBottomOf="@+id/button_add_lap_duration" android:layout_marginEnd="5dp"/>
+    <TextView
+            android:text="24:25"
+            android:textSize="@dimen/full_time_size"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content" android:id="@+id/full_time_text"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintVertical_bias="1.0" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="5dp"/>
+    <Button
+            android:background="@drawable/oval_button"
+            android:text="@string/start"
+            android:textSize="@dimen/start_button_text"
+            android:layout_width="match_parent"
+            android:drawableEnd="@drawable/start"
+
+            android:layout_height="@dimen/start_button_height" android:id="@+id/button"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lap_count_text"
+            app:layout_constraintVertical_bias="1.0" android:layout_marginBottom="10dp" android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

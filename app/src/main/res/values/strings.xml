@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">BoxTimer</string>
+    <string name="one_round_duration">Длительность одного раунда</string>
+    <string name="rest_duration">Время отдыха</string>
+    <string name="delay_before_first_lap">Задержка перед первым раундом</string>
+    <string name="lap_count">Количество раундов</string>
+    <string name="start">НАЧАТЬ</string>
+
+</resources>
