@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
             Dialog.BUTTON_NEGATIVE->Log.i(TAG , "BUTTON_NEGATIVE Pressed")
             Dialog.BUTTON_NEUTRAL->{
                 Log.i(TAG , "BUTTON Delete Pressed")
-                //TODO Delete
+
                 if (db.getDAO().getAll().size==1){
                     Log.i(TAG , "Удаление единственного элемента невозможно")
                     Toast.makeText(this , "Удаление единственного элемента невозможно" , Toast.LENGTH_LONG).show()

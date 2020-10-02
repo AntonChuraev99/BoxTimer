@@ -2,7 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_constraint_layout_container"
+>
 
     <ImageButton
             android:layout_width="@dimen/button_size"
@@ -174,7 +176,7 @@
             android:layout_height="wrap_content" android:id="@+id/full_time_text"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_width="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/button"
+            app:layout_constraintBottom_toTopOf="@+id/start_countdown_button"
             app:layout_constraintVertical_bias="1.0" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" android:layout_marginBottom="5dp"/>
     <Button
@@ -184,7 +186,7 @@
             android:layout_width="match_parent"
             android:drawableEnd="@drawable/start"
 
-            android:layout_height="@dimen/start_button_height" android:id="@+id/button"
+            android:layout_height="@dimen/start_button_height" android:id="@+id/start_countdown_button"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/lap_count_text"

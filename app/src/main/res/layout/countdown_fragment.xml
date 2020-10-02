@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <com.filippudak.ProgressPieView.ProgressPieView
+            app:ppvTypeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
+            app:ppvProgressFillType="radial"
+            app:ppvStrokeWidth="6dp"
+            app:ppvStrokeColor="@color/colorPrimary"
+            app:ppvBackgroundColor="@color/colorAccent"
+            app:ppvProgressColor="@color/colorPrimaryDark"
+
+
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:id="@+id/progressBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="175dp"/>
+    <TextView
+            android:text="Раунд 1/7"
+            android:textSize="40sp"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/round_n"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="55dp" app:layout_constraintBottom_toTopOf="@+id/title"
+            app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="15dp"/>
+    <TextView
+            android:text="1.25"
+            android:textSize="40sp"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/timer"
+            app:layout_constraintStart_toStartOf="@+id/progressBar" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBar"
+            app:layout_constraintTop_toTopOf="@+id/progressBar"/>
+    <TextView
+            android:text="title"
+            android:textSize="35sp"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/round_n" app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            android:layout_marginBottom="15dp"/>
+    <TextView
+            android:text="24:25"
+            android:textSize="40sp"
+            android:textColor="@android:color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/full_time_text"
+            android:layout_marginEnd="15dp" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/round_n" app:layout_constraintBottom_toBottomOf="@+id/round_n"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/round_button"
+            android:id="@+id/stop_button"
+            android:background="@android:color/transparent"
+android:visibility="gone"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/go_button"
+            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="55dp"/>
+    <ImageButton
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/pause_circle"
+            android:id="@+id/pause_timer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="55dp"/>
+    <ImageButton
+            android:layout_width="wrap_content"
+android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/go_circle" android:id="@+id/go_button"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/stop_button" app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="55dp"/>
+    <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" app:srcCompat="@drawable/stop" android:id="@+id/imageView"
+            android:layout_weight="1"
+            app:layout_constraintTop_toTopOf="@+id/stop_button" app:layout_constraintEnd_toEndOf="@+id/stop_button"
+            app:layout_constraintStart_toStartOf="@+id/stop_button"
+            app:layout_constraintBottom_toBottomOf="@+id/stop_button"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

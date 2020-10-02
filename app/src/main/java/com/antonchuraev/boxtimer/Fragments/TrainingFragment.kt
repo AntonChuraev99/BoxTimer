@@ -1,6 +1,7 @@
 package com.antonchuraev.boxtimer.Fragments
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.room.Database
 import androidx.room.Room
 import com.antonchuraev.boxtimer.DataBase.AppDatabase
@@ -18,6 +20,8 @@ import com.antonchuraev.boxtimer.Presenter.Presenter
 import com.antonchuraev.boxtimer.Presenter.PresenterInterface
 import com.antonchuraev.boxtimer.Presenter.ViewInterface
 import com.antonchuraev.boxtimer.R
+import kotlinx.android.synthetic.main.countdown_fragment.view.*
+import java.time.Duration
 
 
 class TrainingFragment : Fragment() , ViewInterface{
@@ -26,7 +30,7 @@ class TrainingFragment : Fragment() , ViewInterface{
 
     companion object {
         fun newInstance(trainingProgramModel: TrainingProgramModel) : TrainingFragment {
-            val trainingFragment: TrainingFragment = TrainingFragment()
+            val trainingFragment = TrainingFragment()
             trainingFragment.viewModel=trainingProgramModel
             return  trainingFragment
         }
@@ -53,12 +57,14 @@ class TrainingFragment : Fragment() , ViewInterface{
 
     lateinit var fullTime:TextView
 
+    lateinit var startDuration: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val v:View = inflater.inflate(R.layout.training_program_fragment, container, false)
+
         presenter = Presenter(this, viewModel)
 
         lapDurationTime=v.findViewById(R.id.round_duration)
@@ -97,6 +103,17 @@ class TrainingFragment : Fragment() , ViewInterface{
                         (activity as AppCompatActivity).applicationContext,
                         AppDatabase::class.java, "trainingProgramModel"
                 ).allowMainThreadQueries().build()
+
+        startDuration = v.findViewById(R.id.start_countdown_button)
+        startDuration.setOnClickListener {
+
+
+            val intent = Intent((activity as AppCompatActivity).applicationContext, Countdown::class.java).apply {
+                putExtra("ViewModel", viewModel)
+            }
+            startActivity(intent)
+
+        }
 
         return v
     }

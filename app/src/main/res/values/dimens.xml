@@ -10,4 +10,6 @@
     <dimen name="start_button_text">35sp</dimen>
     <dimen name="spinner_title_size">25sp</dimen>
     <dimen name="tittle_buttons">50dp</dimen>
+    <dimen name="pause_button">100dp</dimen>
+    <dimen name="stop_button">85dp</dimen>
 </resources>
