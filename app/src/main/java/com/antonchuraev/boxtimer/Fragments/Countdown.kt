@@ -1,5 +1,7 @@
 package com.antonchuraev.boxtimer.Fragments
 
+import android.media.AudioManager
+import android.media.SoundPool
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
@@ -48,6 +50,8 @@ class Countdown : AppCompatActivity() {
     var stopped=false
     var newTimersInitialize=false
 
+    lateinit var  mSoundPool: SoundPool
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.countdown_fragment)
@@ -56,7 +60,7 @@ class Countdown : AppCompatActivity() {
         lapCount=trainingData.lapCount
 
         roundN = findViewById(R.id.round_n)
-        roundN.text = "Раунд $iForTimers/$lapCount"
+        roundN.text ="${resources.getString(R.string.Round)} $iForTimers/$lapCount"
 
         title = findViewById(R.id.title)
 
@@ -72,7 +76,7 @@ class Countdown : AppCompatActivity() {
 
         initializeTimers()
         if (trainingData.delayBeforeFirstLap==0){
-            title.text = "Бой"
+            title.text = resources.getString(R.string.fight)
             fightTimer.start()
             progressBar.max = trainingData.lapDuration
 
@@ -80,7 +84,7 @@ class Countdown : AppCompatActivity() {
 
         }
         else{
-            title.text = "Подготовка"
+            title.text = resources.getString(R.string.Preparation)
             delayBeforeFirstTimer.start()
             progressBar.max = trainingData.delayBeforeFirstLap
 
@@ -107,7 +111,8 @@ class Countdown : AppCompatActivity() {
             finish()
         }
 
-
+        mSoundPool= SoundPool.Builder().build()
+        mSoundPool.load(this,   R.raw.sound , 1);
 
     }
 
@@ -119,9 +124,9 @@ class Countdown : AppCompatActivity() {
 
     private fun resumeTimer() {
 
-        newTimer=object:CountDownTimer( millisUntilFinish , countDownInterval){
+        newTimer=object:CountDownTimer(millisUntilFinish, countDownInterval){
             override fun onTick(millisUntilFinished: Long) {
-                timer.text = convertTimeToString((millisUntilFinished/1000).toInt())
+                timer.text = convertTimeToString((millisUntilFinished / 1000).toInt())
 
                 millisUntilFinish=millisUntilFinished
 
@@ -131,50 +136,53 @@ class Countdown : AppCompatActivity() {
                 else{
                     progressBar.progress++
                 }
+                if (millisUntilFinished/1000==1L){
+                    playSound()
+                }
             }
 
             override fun onFinish() {
-                Log.i(TAG , "onFinish newTimer")
-
+                Log.i(TAG, "onFinish newTimer")
+                stopAllSound()
                 //TODO bad look
                 when(title.text) {
-                    ("Подготовка")->{
-                        title.text = "Бой"
+                    (resources.getString(R.string.Preparation)) -> {
+                        title.text = (resources.getString(R.string.fight))
                         fightTimer.start()
 
                         progressBar.progress = 0
                         progressBar.max = trainingData.lapDuration
 
-                        currentTimer=fightTimer
+                        currentTimer = fightTimer
                     }
-                    ("Бой")->{
-                        title.text = "Отдых"
-                    restTimer.start()
+                    (resources.getString(R.string.fight)) -> {
+                        title.text = (resources.getString(R.string.Rest))
+                        restTimer.start()
 
-                    progressBar.progress = 0
-                    progressBar.max = trainingData.restDuration
+                        progressBar.progress = 0
+                        progressBar.max = trainingData.restDuration
 
-                    currentTimer=restTimer
+                        currentTimer = restTimer
                     }
-                    ("Отдых")->{
+                    (resources.getString(R.string.Rest)) -> {
 
                         iForTimers++
 
-                        if (iForTimers<=lapCount){
-                                title.text = "Бой"
-                                roundN.text = "Раунд $iForTimers/$lapCount"
-                                fightTimer.start()
+                        if (iForTimers <= lapCount) {
+                            title.text  = (resources.getString(R.string.fight))
+                            roundN.text = "${resources.getString(R.string.Round)} $iForTimers/$lapCount"
+                            fightTimer.start()
 
-                                progressBar.progress = 0
-                                progressBar.max = trainingData.lapDuration
+                            progressBar.progress = 0
+                            progressBar.max = trainingData.lapDuration
 
-                                currentTimer=fightTimer
-                            }else{
-                                //FINISH
-                                Log.i(TAG , "training end")
-                                finishAllTimers()
-                                finish()
-                            }
+                            currentTimer = fightTimer
+                        } else {
+                            //FINISH
+                            Log.i(TAG, "training end")
+                            finishAllTimers()
+                            finish()
+                        }
 
                     }
                 }
@@ -184,14 +192,14 @@ class Countdown : AppCompatActivity() {
         newTimer.start()
         currentTimer=newTimer;
 
-        newFullTimer=object:CountDownTimer( millisUntilFinishInFullTime , countDownInterval){
+        newFullTimer=object:CountDownTimer(millisUntilFinishInFullTime, countDownInterval){
             override fun onTick(millisUntilFinished: Long) {
-                fullTime.text = convertTimeToString((millisUntilFinished/1000).toInt())
+                fullTime.text = convertTimeToString((millisUntilFinished / 1000).toInt())
                 millisUntilFinishInFullTime=millisUntilFinished
             }
 
             override fun onFinish() {
-                Log.i(TAG , "onFinish newFullTimer")
+                Log.i(TAG, "onFinish newFullTimer")
 
 
             }
@@ -209,21 +217,28 @@ class Countdown : AppCompatActivity() {
     }
 
     private fun initializeTimers() {
-        restTimer=object:CountDownTimer(trainingData.restDuration*1000.toLong(), countDownInterval){
+        restTimer=object:CountDownTimer(trainingData.restDuration * 1000.toLong(), countDownInterval){
             override fun onTick(millisUntilFinished: Long) {
-                timer.text = convertTimeToString((millisUntilFinished/1000).toInt())
+                timer.text = convertTimeToString((millisUntilFinished / 1000).toInt())
                 millisUntilFinish=millisUntilFinished
                 progressBar.progress++
+
+                if (millisUntilFinished/1000==1L){
+                    playSound()
+                }
+
             }
 
             override fun onFinish() {
-                Log.i(TAG , "onFinish restTimer")
+                Log.i(TAG, "onFinish restTimer")
 
                 iForTimers++
 
+                stopAllSound()
+
                 if (iForTimers<=lapCount){
-                    title.text = "Бой"
-                    roundN.text = "Раунд $iForTimers/$lapCount"
+                    title.text = resources.getString(R.string.fight)
+                    roundN.text = "${resources.getString(R.string.Round)} $iForTimers/$lapCount"
                     fightTimer.start()
 
                     progressBar.progress = 0
@@ -232,7 +247,7 @@ class Countdown : AppCompatActivity() {
                     currentTimer=fightTimer
                 }else{
                     //FINISH
-                    Log.i(TAG , "training end")
+                    Log.i(TAG, "training end")
                     finishAllTimers()
                     finish()
                 }
@@ -240,54 +255,69 @@ class Countdown : AppCompatActivity() {
             }
         }
 
-        fightTimer=object:CountDownTimer(trainingData.lapDuration*1000.toLong(), countDownInterval){
+        fightTimer=object:CountDownTimer(trainingData.lapDuration * 1000.toLong(), countDownInterval){
             override fun onTick(millisUntilFinished: Long) {
-                timer.text = convertTimeToString((millisUntilFinished/1000).toInt())
+                timer.text = convertTimeToString((millisUntilFinished / 1000).toInt())
                 millisUntilFinish=millisUntilFinished
                 progressBar.progress++
+
+                if (millisUntilFinished/1000==1L){
+                    playSound()
+                }
             }
 
             override fun onFinish() {
-                Log.i(TAG , "onFinish mainTimer")
-                title.text = "Отдых"
+                Log.i(TAG, "onFinish mainTimer")
+                title.text = resources.getString(R.string.Rest)
                 restTimer.start()
 
                 progressBar.progress = 0
                 progressBar.max = trainingData.restDuration
 
                 currentTimer=restTimer
+
+                stopAllSound()
             }
         }
 
-        delayBeforeFirstTimer = object:CountDownTimer(trainingData.delayBeforeFirstLap*1000.toLong(), countDownInterval){
+        delayBeforeFirstTimer = object:CountDownTimer(trainingData.delayBeforeFirstLap * 1000.toLong(), countDownInterval){
             override fun onTick(millisUntilFinished: Long) {
-                timer.text = convertTimeToString((millisUntilFinished/1000).toInt())
+                timer.text = convertTimeToString((millisUntilFinished / 1000).toInt())
 
                 millisUntilFinish=millisUntilFinished
 
                 progressBar.progress++
+
+                if (millisUntilFinished/1000==1L){
+                    playSound()
+                }
             }
 
             override fun onFinish() {
-                Log.i(TAG , "onFinish delayBeforeFirstTimer")
-                title.text = "Бой"
+                Log.i(TAG, "onFinish delayBeforeFirstTimer")
+                title.text = resources.getString(R.string.fight)
                 fightTimer.start()
 
                 progressBar.progress = 0
                 progressBar.max = trainingData.lapDuration
 
                 currentTimer=fightTimer
+
+                stopAllSound()
+
             }
         }
 
-        fullTimeTimer = object:CountDownTimer(trainingData.fullTime*1000.toLong(), countDownInterval){
+        fullTimeTimer = object:CountDownTimer(trainingData.fullTime * 1000.toLong(), countDownInterval){
             override fun onTick(millisUntilFinished: Long) {
-                fullTime.text = convertTimeToString((millisUntilFinished/1000).toInt())
+                fullTime.text = convertTimeToString((millisUntilFinished / 1000).toInt())
                 millisUntilFinishInFullTime=millisUntilFinished
+
+
             }
 
             override fun onFinish() {
-                Log.i(TAG , "onFinish fullTimer")
+                Log.i(TAG, "onFinish fullTimer")
 
             }
         }
@@ -312,6 +342,14 @@ class Countdown : AppCompatActivity() {
     private fun convertTimeToString(int: Int): String? {
         val str:String = "${if (int<600) "0${int/60}" else "${int/60}"}:${if (int%60<10) "0${int%60}" else "${int%60}"}"
         return str
+    }
+
+
+    private fun playSound(){
+        mSoundPool.play(1 , 1f, 1f , 0 , 0 ,1f)
+    }
+    private fun stopAllSound(){
+        mSoundPool.autoPause()
     }
 
 }

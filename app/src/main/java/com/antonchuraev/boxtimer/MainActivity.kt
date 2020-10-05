@@ -3,8 +3,11 @@ package com.antonchuraev.boxtimer
 
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.*
@@ -21,6 +24,8 @@ import com.antonchuraev.boxtimer.Model.TrainingProgramModel
 
 class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
     val TAG = "BoxTimer"
+    val SAVED_SPINNER_POSITION_TAG="SAVED_SPINNER_POSITION"
+    var SAVED_SPINNER_POSITION_VALUE=0
 
     lateinit var spinner: Spinner
     lateinit var adapter: ArrayAdapter<TrainingProgramModel>
@@ -33,9 +38,19 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
     lateinit var editName: EditText
     lateinit var selectedModel:TrainingProgramModel
 
+    private lateinit var prefs: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.i(TAG, "onCreate ")
+
+        prefs =
+                getSharedPreferences("settings", Context.MODE_PRIVATE)
+        if(prefs.contains(SAVED_SPINNER_POSITION_TAG)){
+            SAVED_SPINNER_POSITION_VALUE = prefs.getInt(SAVED_SPINNER_POSITION_TAG, 0)
+            Log.i(TAG , "Получаем число из настроек spinner.selectedItemPosition:=$SAVED_SPINNER_POSITION_VALUE")
+        }
 
         db =
                 Room.databaseBuilder(
@@ -46,8 +61,8 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
 
         if (db.getDAO().getAll().isEmpty()) {
             Log.i("BoxTime", "Data Base is empty, add 2 standard programs")
-            val firstProgram = TrainingProgramModel("Тренировка", 150, 90, 15, 5)
-            val secProgram = TrainingProgramModel("Бой", 180, 60, 20, 12)
+            val firstProgram = TrainingProgramModel(resources.getString(R.string.training), 150, 90, 15, 5)
+            val secProgram = TrainingProgramModel(resources.getString(R.string.fight), 180, 60, 20, 12)
 
             db.getDAO().insertAll(firstProgram,secProgram)
 
@@ -58,7 +73,7 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
         var fr: Fragment? = supportFragmentManager.findFragmentById(R.id.fragment_container)
 
         if (fr == null) {
-            createAndShowFragmentFromModel(db.getDAO().getAll()[0]) //TODO getLast
+            createAndShowFragmentFromModel(db.getDAO().getAll()[0]) //TODO getLast?WORKING
         }
 
         val toolBar: Toolbar = findViewById(R.id.toolbar)
@@ -84,6 +99,8 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
             }
 
         }
+        spinner.setSelection(SAVED_SPINNER_POSITION_VALUE)
+
 
         changeName = findViewById(R.id.change_name_button)
         changeName.setOnClickListener {
@@ -95,10 +112,10 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
         addNewProgram = findViewById(R.id.add_new_program_button)
         addNewProgram.setOnClickListener {
             if (db.getDAO().getAll().size>9){
-                Toast.makeText(this, "Уже создано достаточно программ, измените или удалите старые" , Toast.LENGTH_LONG).show()
+                Toast.makeText(this, resources.getString(R.string.enough_programs) , Toast.LENGTH_LONG).show()
             }
             else{
-                val newProgram = TrainingProgramModel("Новая программа" , 120, 90 , 15 ,5)
+                val newProgram = TrainingProgramModel(resources.getString(R.string.new_training) , 120, 90 , 15 ,5)
                 db.getDAO().insertAll(newProgram)
                 updateSpinner()
                 createAndShowFragmentFromModel(newProgram)
@@ -113,10 +130,10 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
     private fun createAndShowDialog() {
         val adb: AlertDialog.Builder? = AlertDialog.Builder(this)
                 .setView(R.layout.change_name_dialog)
-                .setTitle("Изменить программу")
-                .setPositiveButton("Ок", this )
-                .setNegativeButton("Назад", this )
-                .setNeutralButton("Удалить", this ) //TODO
+                .setTitle(resources.getString(R.string.change_training))
+                .setPositiveButton(resources.getString(R.string.OK), this )
+                .setNegativeButton(resources.getString(R.string.Back), this )
+                .setNeutralButton(resources.getString(R.string.Delete), this )
 
         adb!!.create()
 
@@ -144,13 +161,11 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
 
                 if (db.getDAO().getAll().size==1){
                     Log.i(TAG , "Удаление единственного элемента невозможно")
-                    Toast.makeText(this , "Удаление единственного элемента невозможно" , Toast.LENGTH_LONG).show()
+                    Toast.makeText(this , resources.getString(R.string.removing_single_item_not_possible) , Toast.LENGTH_LONG).show()
                 }
                 else{
                     Log.i(TAG , "Удаление элемента")
                     db.getDAO().delete(selectedModel)
-
-                    createAndShowFragmentFromModel(db.getDAO().getAll()[0])
 
                     updateSpinner()
                 }
@@ -175,5 +190,11 @@ class MainActivity : AppCompatActivity() , DialogInterface.OnClickListener {
         adapter.notifyDataSetChanged()
     }
 
+    override fun onStop() {
+        super.onStop()
+        val editor = prefs.edit()
+        editor.putInt(SAVED_SPINNER_POSITION_TAG, spinner.selectedItemPosition).apply()
+        Log.i(TAG , "onStop and save spinner.selectedItemPosition:${spinner.selectedItemPosition}")
+    }
 
 }

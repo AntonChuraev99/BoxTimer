@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Таймер раундов для бокса</string>
+    <string name="rest_duration">Время отдыха</string>
+    <string name="delay_before_first_lap">Задержка перед первым раундом</string>
+    <string name="lap_count">Количество раундов</string>
+    <string name="start">НАЧАТЬ</string>
+    <string name="one_round_duration">Длительность одного раунда</string>
+    <string name="training">Тренировка</string>
+    <string name="fight">Бой</string>
+    <string name="OK">ОК</string>
+    <string name="Back">Назад</string>
+    <string name="Delete">Удалить</string>
+    <string name="change_training">Изменить программу</string>
+    <string name="removing_single_item_not_possible">Удаление единственного элемента невозможно</string>
+    <string name="enough_programs">Уже создано достаточно программ, измените или удалите старые</string>
+    <string name="new_training">Новая тренировка</string>
+    <string name="Round">Раунд</string>
+    <string name="Preparation">Подготовка</string>
+    <string name="Rest">Отдых</string>
+
+</resources>

@@ -8,9 +8,9 @@
     <com.filippudak.ProgressPieView.ProgressPieView
             app:ppvTypeface="fonts/Roboto/RobotoCondensed-Bold.ttf"
             app:ppvProgressFillType="radial"
-            app:ppvStrokeWidth="6dp"
-            app:ppvStrokeColor="@color/colorPrimary"
-            app:ppvBackgroundColor="@color/colorAccent"
+            app:ppvStrokeWidth="10dp"
+            app:ppvStrokeColor="@android:color/background_dark"
+            app:ppvBackgroundColor="#FFFFFF"
             app:ppvProgressColor="@color/colorPrimaryDark"
 
 
@@ -21,7 +21,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="175dp"/>
+            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="175dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
     <TextView
             android:text="Раунд 1/7"
             android:textSize="40sp"
@@ -35,13 +36,14 @@
             app:layout_constraintHorizontal_bias="0.0" android:layout_marginStart="15dp"/>
     <TextView
             android:text="1.25"
-            android:textSize="40sp"
+            android:textSize="100dp"
+            android:textStyle="bold"
             android:textColor="@android:color/black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/timer"
             app:layout_constraintStart_toStartOf="@+id/progressBar" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="@+id/progressBar"
-            app:layout_constraintTop_toTopOf="@+id/progressBar"/>
+            app:layout_constraintTop_toTopOf="@+id/progressBar" android:layout_marginBottom="25dp"/>
     <TextView
             android:text="title"
             android:textSize="35sp"
@@ -83,7 +85,7 @@ android:visibility="gone"
             android:layout_marginBottom="55dp"/>
     <ImageButton
             android:layout_width="wrap_content"
-android:visibility="gone"
+            android:visibility="gone"
             android:background="@android:color/transparent"
             android:layout_height="wrap_content" app:srcCompat="@drawable/go_circle" android:id="@+id/go_button"
             android:layout_weight="1"
